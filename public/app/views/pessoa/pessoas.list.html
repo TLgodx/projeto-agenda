@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Pessoas</title>
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body ng-controller="PessoaListController">
+
+<div class="container">
+    <div class="panel panel-default">
+        <div class="panel-heading clearfix">
+            <h3 class="panel-title pull-left">
+                <i class="fa fa-users"></i> Pessoas
+            </h3>
+            <div class="pull-right">
+                <button class="btn btn-default btn-sm" ng-click="abrirFiltro()">
+                    <i class="fa fa-filter"></i> Filtrar
+                </button>
+                <button class="btn btn-danger btn-sm" ng-click="irParaCadastro()">
+                    <i class="fa fa-plus"></i> Nova pessoa
+                </button>
+            </div>
+        </div>
+
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead class="bg-light">
+                <tr>
+                    <th>ID</th>
+                    <th>Nome</th>
+                    <th>Contatos</th>
+                    <th style="width: 120px"></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="pessoa in getPaginatedPessoas()">
+                    <td>{{pessoa.id}}</td>
+                    <td>
+                        {{pessoa.nome}}
+                        <span class="label label-primary" ng-if="pessoa.tipo" style="padding: 6px">{{pessoa.tipo}}</span>
+                    </td>
+                    <td>
+                        <button class="btn btn-xs btn-default" style="padding:5px">
+                            {{ (pessoa.contatos ? pessoa.contatos.length : 0) }}
+                            {{ (pessoa.contatos && pessoa.contatos.length === 1) ? 'contato' : 'contatos' }}
+                        </button>
+
+                    </td>
+
+                    <td class="text-right">
+                        <button class="btn btn-xs btn-default" title="Visualizar" ng-click="visualizarPessoa(pessoa.id)">
+                            <i class="fa fa-eye"></i>
+                        </button>
+                        <button class="btn btn-xs btn-default" title="Editar" ng-click="editarPessoa(pessoa.id)">
+                            <i class="fa fa-pencil"></i>
+                        </button>
+                        <button class="btn btn-xs btn-default" title="Remover" ng-click="removerPessoa(pessoa.id)">
+                            <i class="fa fa-trash"></i>
+                        </button>
+                    </td>
+                </tr>
+
+                <tr ng-if="pessoas.length === 0">
+                    <td colspan="5" class="text-center text-muted">
+                        <i class="fa fa-info-circle"></i> Nenhuma pessoa encontrada.
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="panel-footer text-right">
+            <span>Página: <strong>{{ currentPage }}</strong> de <strong>{{ totalPages() }}</strong></span>
+            <span>Linhas por página:
+                <select class="form-control input-sm" style="width: auto; display: inline-block;"
+                        ng-model="itemsPerPage"
+                        ng-init="itemsPerPage = 10"
+                        ng-change="currentPage = 1">
+                    <option value="5">5</option>
+                    <option value="10">10</option>
+                    <option value="20">20</option>
+                </select>
+            </span>
+            <span>{{ totalPessoas }} registros no total</span>
+            <button class="btn btn-default btn-sm" ng-click="paginaAnterior()" ng-disabled="currentPage === 1">
+                <i class="fa fa-chevron-left"></i>
+            </button>
+            <button class="btn btn-default btn-sm" ng-click="proximaPagina()" ng-disabled="currentPage === totalPages()">
+                <i class="fa fa-chevron-right"></i>
+            </button>
+        </div>
+
+        <!-- Abre o filtro de registro-->
+        <div id="filtro-pessoa-modal" class="modal fade" tabindex="-1" role="dialog" ng-controller="pessoaFilterController">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div ng-include="'app/views/pessoa/pessoa.filter.html'"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

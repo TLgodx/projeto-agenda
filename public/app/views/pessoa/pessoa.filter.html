@@ -1,0 +1,23 @@
+<div class="modal-sidebar filtro-container" ng-controller="pessoaFilterController"
+     style="padding:0 20px 20px 20px">
+    <h4 class="mb-4">
+        <i class="fa fa-filter"></i> Filtrar
+    </h4>
+
+    <div class="form-group mb-3">
+        <label>ID:</label>
+        <input type="text" class="form-control" ng-model="filtro.id" placeholder="Digite o ID">
+    </div>
+
+    <div class="form-group mb-4">
+        <label>Nome:</label>
+        <input type="text" class="form-control" ng-model="filtro.nome" placeholder="Digite o nome">
+    </div>
+
+    <div class="text-right">
+        <button class="btn btn-secondary mr-2" ng-click="limparFiltro()">Limpar filtro</button>
+        <button class="btn btn-primary" ng-click="enviarFiltro()">
+            <i class="fa fa-check"></i> Aplicar filtro
+        </button>
+    </div>
+</div>

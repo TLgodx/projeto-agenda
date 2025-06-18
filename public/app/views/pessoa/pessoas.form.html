@@ -1,0 +1,101 @@
+<div class="container">
+    <div class="panel panel-default">
+        <form name="pessoaForm" novalidate ng-submit="salvarPessoa()">
+            <div class="panel-heading clearfix">
+                <h4 class="pull-left">
+                    <i class="fa fa-user"></i>
+                    <span ng-if="mode === 'create'">Nova Pessoa</span>
+                    <span ng-if="mode === 'edit'">Editando Pessoa</span>
+                    <span ng-if="mode === 'show'">Visualizando Pessoa</span>
+                </h4>
+
+                <div class="pull-right">
+                    <button type="button" class="btn btn-default btn-sm" ng-click="voltarParaLista()">
+                        <i class="fa fa-times"></i> Cancelar
+                    </button>
+
+                    <button class="btn btn-success btn-sm"
+                            ng-if="mode !== 'show'"
+                            type="submit"
+                            ng-disabled="pessoaForm.$invalid">
+                        <i class="fa fa-check"></i> Salvar
+                    </button>
+
+                    <button class="btn btn-primary btn-sm" ng-if="mode === 'show'" ng-click="irParaEditar()">
+                        <i class="fa fa-pencil"></i> Editar
+                    </button>
+                </div>
+            </div>
+
+            <div class="panel-body">
+                <!-- Abas -->
+                <ul class="nav nav-tabs">
+                    <li role="presentation" ng-class="{ active: abaSelecionada === 'dados' }">
+                        <a href="" ng-click="selecionarAba('dados')">
+                            Dados pessoais
+                        </a>
+                    </li>
+                    <li role="presentation" ng-if="mode === 'edit' || mode === 'show'" ng-class="{ active: abaSelecionada === 'contatos' }">
+                        <a href="" ng-click="selecionarAba('contatos')">Contatos</a>
+                    </li>
+
+                </ul>
+
+                <!-- Conteúdo das abas -->
+                <div class="tab-content" style="margin-top: 15px;">
+
+                    <!-- Aba Dados pessoais -->
+                    <div class="tab-pane fade in"
+                         ng-class="{ active: abaSelecionada === 'dados' }"
+                         ng-show="abaSelecionada === 'dados'">
+
+                        <div class="row">
+                            <div class="col-md-8">
+                                <div class="form-group"
+                                     ng-class="{'has-error': pessoaForm.nome.$touched && pessoaForm.nome.$invalid}">
+                                    <label class="control-label">Nome:</label>
+                                    <input type="text" class="form-control"
+                                           name="nome"
+                                           ng-model="pessoa.nome"
+                                           ng-disabled="mode === 'show'"
+                                           ng-required="mode !== 'show'">
+                                    <span class="help-block"
+                                          ng-show="pessoaForm.nome.$touched && pessoaForm.nome.$error.required">
+                                        O nome é obrigatório.
+                                    </span>
+                                </div>
+                            </div>
+
+                            <div class="col-md-4">
+                                <div class="form-group"
+                                     ng-class="{'has-error': pessoaForm.tipo.$touched && pessoaForm.tipo.$invalid}">
+                                    <label class="control-label">Tipo:</label>
+                                    <select class="form-control"
+                                            name="tipo"
+                                            ng-model="pessoa.tipo"
+                                            ng-disabled="mode === 'show'"
+                                            ng-required="mode !== 'show'"
+                                            ng-options="tipo for tipo in tiposPessoa">
+                                    </select>
+                                    <span class="help-block"
+                                          ng-show="pessoaForm.tipo.$touched && pessoaForm.tipo.$error.required">
+                                        O tipo é obrigatório.
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Aba Contatos -->
+                    <div class="tab-pane fade in"
+                         ng-class="{ active: abaSelecionada === 'contatos' }"
+                         ng-show="abaSelecionada === 'contatos' && (mode === 'edit' || mode === 'show')">
+                        <div ng-controller="PessoaContatosController"
+                             ng-include="'app/views/pessoa/pessoacontato.html'">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

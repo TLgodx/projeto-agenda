@@ -1,0 +1,52 @@
+<div>
+    <div class="panel panel-default">
+        <div class="panel-heading clearfix">
+            <div class="pull-left h4">
+                <i class="fa fa-user"></i> {{pessoa.id}} - {{pessoa.nome}}
+            </div>
+            <div class="pull-right">
+                <button type="button" class="btn btn-primary btn-sm"
+                        ng-if="mode !== 'show'"
+                        ng-click="abrirModalContato()">
+                    <i class="fa fa-plus"></i> Incluir
+                </button>
+            </div>
+        </div>
+
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead class="bg-light">
+                <tr>
+                    <th>Contato</th>
+                    <th>Tipo</th>
+                    <th>Valor</th>
+                    <th style="width: 70px"></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="contato in contatos">
+                    <td>{{contato.descricao}}</td>
+                    <td>{{contato.tipo}}</td>
+                    <td>{{contato.valor}}</td>
+                    <td>
+                        <span ng-if="mode !== 'show'">
+                            <button type="button" class="btn btn-xs btn-default" title="Editar" ng-click="editarContato(contato)">
+                                <i class="fa fa-pencil"></i>
+                            </button>
+                            <button class="btn btn-xs btn-default" title="Excluir" ng-click="excluirContato(contato.id)">
+                                <i class="fa fa-trash"></i>
+                            </button>
+                        </span>
+
+                    </td>
+                </tr>
+                <tr ng-if="contatos.length === 0">
+                    <td colspan="4" class="text-center text-muted">
+                        <i class="fa fa-info-circle"></i> Nenhum contato encontrado.
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
