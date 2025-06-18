@@ -38,5 +38,5 @@ A aplicação utiliza uma API REST construída com Silex no backend e uma interf
 
 #### 1. Clone o repositório
 ```bash
-git clone https://github.com/seu-usuario/seu-projeto.git
+git clone https://github.com/TLgodx/projeto-agenda
 cd seu-projeto
