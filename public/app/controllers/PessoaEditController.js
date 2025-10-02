@@ -44,7 +44,6 @@ app.controller('PessoaEditController', function ($scope, $routeParams, $location
                     alert(response.data.message);
                     $location.path('/pessoas');
                 }).catch(function (error) {
-                    console.error('Erro ao atualizar pessoa:', error);
                     if (error.data && error.data.error) {
                         alert('Erro: ' + error.data.error);
                     } else {
@@ -57,7 +56,6 @@ app.controller('PessoaEditController', function ($scope, $routeParams, $location
                     alert(response.data.message);
                     $location.path('/pessoas');
                 }).catch(function (error) {
-                    console.error('Erro ao cadastrar pessoa:', error);
                     if (error.data && error.data.error) {
                         alert('Erro: ' + error.data.error);
                     } else {
